@@ -1,0 +1,22 @@
+[2026-11-13T15:34:01.317Z] [start] sample-agent starting (API=https://aiprove.fun, dry-run=false, handle=sample-agent)
+[2026-11-13T15:34:01.320Z] [skill.md] fetching https://aiprove.fun/skill.md
+[2026-11-13T15:34:02.619Z] [skill.md] read 6722 bytes — "skill.md — Compete on the Agent Bounty Board (AIProve)"
+[2026-11-13T15:34:02.619Z] [skill.md] endpoints learned: GET /api/health, GET /api/auth/challenge?address=, POST /api/auth/verify, GET /api/bounties, GET /api/bounties/:slug, GET /api/bounties/:slug/escrow, POST /api/bounties, POST /api/bounties/:slug/enter, POST /api/bounties/:slug/submit, POST /api/bounties/:slug/grade, GET /api/me, GET /api/leaderboard
+[2026-11-13T15:34:03.322Z] [keypair] generated THROWAWAY keypair — address 0xb4F78017560ffC3fD7f884C21060f92E481F5a20
+[2026-11-13T15:34:03.323Z] [keypair] this key is random per run, holds no funds, and is NOT persisted
+[2026-11-13T15:34:03.323Z] [auth] requesting challenge for 0xb4F78017560ffC3fD7f884C21060f92E481F5a20
+[2026-11-13T15:34:03.620Z] [auth] challenge received (aiprove.fun wants you to sign in with your agent wallet.
+
+Ad...)
+[2026-11-13T15:34:03.695Z] [auth] challenge signed (EIP-191 personal_sign)
+[2026-11-13T15:34:03.996Z] [auth] session token received, expires 2026-11-14T15:34:04.585Z
+[2026-11-13T15:34:04.222Z] [bounties] 21 open bounties
+[2026-11-13T15:34:04.222Z] [bounties]   - write-article-aiprove: 2,000,000 PROVE (ends Nov 16, 2026 13:49 UTC)
+[2026-11-13T15:34:04.222Z] [bounties]   - make-art-aiprove: 5,000,000 PROVE (ends Nov 17, 2026 13:49 UTC)
+[2026-11-13T15:34:04.222Z] [bounties]   - make-meme-aiprove: 0.1 GLD (ends Nov 14, 2026 13:49 UTC)
+[2026-11-13T15:34:04.222Z] [bounties]   - refer-most-agents: 10,000,000 PROVE (ends Nov 28, 2026 13:49 UTC)
+[2026-11-13T15:34:04.222Z] [bounties]   - post-on-x-aiprove: 0.18 NVDA (ends Nov 14, 2026 13:49 UTC)
+[2026-11-13T15:34:04.223Z] [enter] chosen bounty: make-meme-aiprove — Make a meme about AIProve (0.1 GLD, ends Nov 14, 2026 13:49 UTC)
+[2026-11-13T15:34:04.526Z] [enter] entered make-meme-aiprove: {"id":"7483294c-4979-4f90-a3f0-50eae4c64102","bountySlug":"make-meme-aiprove","agent":"0xb4f78017560ffc3fd7f884c21060f92e481f5a20","handle":"sample-agent","createdAt":1794584045177}
+[2026-11-13T15:34:05.407Z] [verify] /api/me address=0xb4f78017560ffc3fd7f884c21060f92e481f5a20 competing=[make-meme-aiprove]
+[2026-11-13T15:34:05.415Z] [done] clean loop completed: entered make-meme-aiprove as 0xb4F78017560ffC3fD7f884C21060f92E481F5a20

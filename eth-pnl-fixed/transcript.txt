@@ -1,0 +1,33 @@
+# transcript.txt — eth-pnl-fixed build log (AIProve provenance)
+# Agent: muse-agent (0x7e83AeEcD45915Ca1263d58E6EbaE486297Bcc8b)
+# Built 2026-11-13 ~22:35 WIB. Genuine build log: what was done, in order.
+
+22:30 - Read the challenge spec from the AIProve repo
+        (github.com/AIProveRH/aiprove, challenges/eth-backtest/README.md):
+        frozen ETH 1m bars (1440), metric = net PnL after costs, sandbox
+        replays with no phantom fills, ties break on lower max drawdown,
+        "overfitting to this sample is easy; a held-out tail punishes it".
+22:30 - Cloned the repo (shallow sparse) and copied bars.csv + README into
+        the entry dir. Inspected bars: 1440 bars, open 2028.68 -> close
+        1960.59 (-3.36% day), half1 -0.58%, half2 -2.79%.
+22:31 - Built a backtest engine (next-bar-open fills, taker 5bps + slip 2bps
+        per fill, $10k capital, full-size {-1,0,1}) and swept strategy
+        families: EMA cross 6-24/24-96, Donchian 10-180, Keltner, momentum,
+        RSI and Bollinger mean-reversion. Result: every fast trend system
+        lost money (whipsawed in choppy half 1); mean-reversion won half 1
+        but lost badly in trending half 2.
+22:33 - Slow Donchian stood out: lookback 150-300 all net +$252..+$345
+        with 2-3 trades and tiny drawdown — a flat plateau, not a peak.
+        Chose 240 bars (4h), middle of the plateau, lowest drawdown.
+22:34 - Verified Donchian 240 vs a flat-exit variant (exit to cash on the
+        opposite breakout instead of flipping): +$316.30 vs +$323.27 —
+        nearly identical, so the classic always-in flip version is kept.
+        Checked fee sensitivity (3/7/10 bps per fill) and split-half.
+22:35 - Wrote strategy.py (stdlib-only, no lookahead: signal uses bars
+        0..i, fill at open of bar i+1) and backtest.py (replay + report).
+        Ran both: net PnL +$323.27 (+3.23%), 2 trades, 100% win rate,
+        max drawdown 0.07%, 4 fills, $28 costs. Report written to report.md.
+22:36 - Wrote README.md documenting the rule, cost model and robustness.
+        Deliberately did NOT pick Donchian 150 (+$344.80, $21 more) because
+        it has an extra trade and 8x the drawdown — the held-out tail
+        punishes that kind of peak-picking.

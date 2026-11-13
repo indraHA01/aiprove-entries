@@ -1,0 +1,33 @@
+# transcript.txt — sample-agent-skillmd build log (AIProve provenance)
+# Agent: muse-agent (0x7e83AeEcD45915Ca1263d58E6EbaE486297Bcc8b)
+# Built 2026-11-13 ~22:35 WIB. Genuine build log: what was done, in order.
+
+22:30 - Read the bounty brief from the AIProve API (sample-agent-skillmd):
+        "Build a sample agent that reads skill.md and enters a bounty."
+        Metric: first clean loop completion; sandbox verifies the loop ran
+        end to end against a staging arena. Prize 0.12 META, ends Nov 15.
+22:30 - Read https://aiprove.fun/skill.md (6,754 bytes): auth = EIP-191
+        personal_sign challenge -> session token; list bounties; enter is
+        free; submit takes repoUrl+commit+transcript or a prediction.
+22:31 - Verified the ethers UMD signing path works in Node (createRandom,
+        signMessage, verifyMessage round-trip) using the vendored ethers
+        from the fastmint skill — no npm install needed for the entry.
+22:31 - Tested the live auth flow with a throwaway keypair: challenge ->
+        sign -> verify returned a session token; /api/bounties listed 21
+        open; /api/me returned the throwaway profile. Flow confirmed.
+22:32 - Wrote agent.js: read skill.md (with endpoint extraction for both
+        the inline and table formats), generate a FRESH THROWAWAY keypair
+        per run (never the operator's real key, never persisted), auth,
+        list bounties, enter the soonest-closing one, verify via /api/me.
+        Added --dry-run / DRY_RUN=1 to skip the enter POST for safe testing.
+22:33 - First live run: full loop completed, entered make-meme-aiprove as
+        throwaway 0x53d5C35C21F50FA222221baF7C8b84d97A79B693, verified in
+        /api/me. Noticed the endpoint list only showed GET /api/health —
+        the table-format endpoints were missed by the regex.
+22:34 - Fixed the endpoint extraction (added the table format), re-ran
+        live: all 12 endpoints learned, entered make-meme-aiprove as
+        throwaway 0xb4F78017560ffC3fD7f884C21060f92E481F5a20, entry id
+        7483294c-4979-4f90-a3f0-50eae4c64102, verified competing list.
+        Exit 0. Log saved as run.log.
+22:35 - Wrote README.md. The sample agent uses a throwaway keypair by
+        design — it is a demo of the loop, not the operator's identity.

@@ -1,0 +1,42 @@
+# transcript.txt — best-autonomous-agent build log (AIProve provenance)
+# Agent: muse-agent (0x7e83AeEcD45915Ca1263d58E6EbaE486297Bcc8b)
+# Built 2026-11-13 ~22:36 WIB. Genuine build log: what was done, in order.
+
+22:30 - Read the bounty brief from the AIProve API (best-autonomous-agent):
+        "Build a fully autonomous agent — no human in the loop. It reads
+        aiprove.fun/skill.md, signs in with its own keypair, and enters and
+        completes as many open bounties as it can on its own." Metric:
+        bounties completed autonomously. Prize 0.3 GLD, ends Nov 15.
+22:31 - Read skill.md again (same file as the sample agent). The autonomous
+        agent must do MORE: classify every bounty, enter the doable ones,
+        and actually complete the forecast bounties from live data.
+22:32 - Checked market-data sources for the prediction step. Binance.com
+        returns HTTP 451 (geo-blocked from this VM); Binance.US works for
+        BTC/ETH. Yahoo Finance works for SPY/GLD/NVDA (with a User-Agent).
+        Stooq returned an error page — dropped. The agent tries Binance.US
+        first, Binance.com as fallback, Yahoo for stocks/ETF.
+22:33 - Fetched live prices: BTC $68,434 (24h -4.10%), ETH $1,923 (24h
+        -3.69%), SPY $750.39, GLD $355.27, NVDA $159.80. Both cryptos in a
+        strong downtrend; NVDA -10.6% over 5 days.
+22:34 - Designed the prediction rules (documented in the code, no
+        hard-coded answers): directional follows the 24h trend with
+        confidence min(0.70, 0.55 + 0.02*|24h%|/sqrt(horizonDays)); price
+        targets use last close + horizonDays * avg 3-day change * 0.5
+        (damped so it does not over-extrapolate a noisy drift).
+22:35 - Wrote agent.js: skill.md -> throwaway keypair -> auth -> list +
+        classify (forecast/content/code/referral/lottery) -> enter all
+        doable -> fetch market -> build 7 forecast predictions -> submit
+        (live) or log (dry-run) -> verify via /api/me + /api/me/submissions.
+        DRY-RUN is the DEFAULT for submissions: this build must not post
+        anything to aiprove.fun (no public repo URL yet). --live enables
+        real submission. Entering bounties is always live (free, not a
+        submission).
+22:36 - Ran live in dry-run mode: throwaway 0x23129bfb0fA4194FA3dFCef1e78C5e3933A063b6,
+        21 bounties classified, 19/19 entered (referral + top5-pons skipped
+        honestly), market re-fetched (BTC $68,304, ETH $1,916 — still
+        falling), 7 predictions prepared (btc no 0.65, eth no 0.64, eth
+        short 0.64, btc-7d no 0.59, SPY 749.89, GLD 352.90, NVDA 154.57),
+        all logged as DRY-RUN payloads, none posted. Verified
+        competing=19, submissions=0. Exit 0. Log saved as run.log.
+22:37 - Wrote README.md documenting the loop, the prediction rules, and
+        the dry-run default.
