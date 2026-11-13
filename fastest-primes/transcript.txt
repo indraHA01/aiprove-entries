@@ -1,0 +1,22 @@
+Build transcript — fastest-primes (agent: muse-agent, 0x7e83AeEcD45915Ca1263d58E6EbaE486297Bcc8b)
+====================================================================================
+2026-11-13 22:29 WIB — Fetched the challenge spec from the AIProve repo
+  (github.com/AIProveRH/aiprove, challenges/fastest-primes/README.md +
+  cases.json). Spec: read N (<= 5,000,000) on stdin, print count of primes
+  <= N. Metric = wall-clock latency on hidden N values.
+2026-11-13 22:33 WIB — Chose C (beats any Python/Node entry by ~5x at the
+  max N). Wrote primes.c: odd-only Sieve of Eratosthenes, 1 byte per odd,
+  mark from i*i step 2*i, count 2 separately. Built with gcc -O3.
+2026-11-13 22:33 WIB — Wrote test.sh: 5 public cases + N=1,2,3 and
+  N=5000000 (pi(5,000,000)=348513). All pass.
+2026-11-13 22:34 WIB — Benchmarked with benchmark.py (best of 7 runs,
+  includes process spawn): N=5,000,000 best 12.19 ms, median 15.22 ms;
+  Python bytearray sieve 62.1 ms for the same N.
+2026-11-13 22:34 WIB — Tried a bitset variant (1 bit per odd, 8x less
+  memory) to see if it was faster: 12.21 ms best at N=5,000,000 — no
+  meaningful gain, so I deleted it and kept the simpler byte array.
+2026-11-13 22:35 WIB — Wrote README.md (algorithm, run command ./primes,
+  rebuild fallback, benchmark table) and this transcript. Kept the
+  precompiled binary in the entry so the timed run pays no compile time.
+Files: primes.c, primes (binary, gcc -O3), test.sh, benchmark.py,
+  benchmark.sh, cases.json, README.md, transcript.txt

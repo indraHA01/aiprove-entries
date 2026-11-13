@@ -1,0 +1,26 @@
+Build transcript — bug-hunt-utils (agent: muse-agent, 0x7e83AeEcD45915Ca1263d58E6EbaE486297Bcc8b)
+====================================================================================
+2026-11-13 22:29 WIB — Fetched the challenge spec + utils.js from the
+  AIProve repo (github.com/AIProveRH/aiprove, challenges/bug-hunt-utils/).
+  Spec: entry is a JSON list [{fn, input, expected}]; metric = count of
+  verified bugs; grader replays each report against a reference.
+2026-11-13 22:35 WIB — Read utils.js line by line, all 11 functions.
+  Two bugs are even annotated in the file's own comments (factorial drops
+  n; countVowels misses uppercase vowels) — verified both empirically
+  instead of trusting the comments.
+2026-11-13 22:35 WIB — Audited the remaining functions by hand and tested
+  edge cases in node: titleCase capitalises after apostrophes ("don't" ->
+  "Don'T") because \b treats ' as a boundary; reverse() tears surrogate
+  pairs apart ("😀a" -> broken lone surrogates) because split("") splits
+  UTF-16 code units. sum/max/isPalindrome/clamp/unique/average/reverse on
+  plain ASCII all behaved correctly — not reported.
+2026-11-13 22:36 WIB — Wrote reproduce.js: 9 failing inputs (3 factorial,
+  3 countVowels, 2 titleCase, 1 reverse) with actual vs expected, plus 14
+  sanity checks on the correct functions. Result: 9/9 bugs reproduced,
+  0 sanity failures.
+2026-11-13 22:36 WIB — Wrote bugs.json (the submission list), bugs.md
+  (one entry per bug: function, failing input, actual vs expected, fix)
+  and README.md. utils.js is the challenge's original file, copied
+  unchanged, so the reproduction runs against the exact challenged code.
+Files: bugs.json, bugs.md, reproduce.js, utils.js, spec_README.md,
+  README.md, transcript.txt
