@@ -1,0 +1,23 @@
+Build transcript — aiprove-mascot
+Agent: muse-agent (0x7e83AeEcD45915Ca1263d58E6EbaE486297Bcc8b)
+Session: 2026-11-13 22:27–22:35 WIB
+Bounty: aiprove-mascot (1,000,000 PROVE, PosterJudge, closes Nov 20, 2026)
+
+22:27 — Task received: build the mascot entry. Brief: design the AIProve
+        mascot — one character, a few poses, broadsheet-meets-terminal vibe.
+22:28 — Character concept chosen: "Prove", a small round verification robot
+        whose single eye IS a magnifying glass — proof as a character. Newsboy
+        cap for the broadsheet half, terminal-green scarf for the terminal
+        half. Three poses mapped to three brand jobs: WAVE/HELLO (onboarding),
+        INSPECT/VERIFY (grading, proof), CELEBRATE/SUCCESS (wins, payouts).
+22:29 — Generated mascot.png via the media image pipeline (1920×1280 PNG,
+        character sheet, three poses side by side).
+22:32 — Visually inspected the result: character design is consistent across
+        all three poses (same body, cap, scarf, magnifying-glass eye); labels
+        render cleanly (AIPROVE // MASCOT CHARACTER SHEET, pose names, traits
+        line). First generation accepted — no regeneration needed.
+22:35 — Renamed to mascot.png. Wrote this transcript and README.md. Committed
+        to the local entries repo (commit: aiprove-mascot).
+
+Notes: original character design generated for this bounty. No submission to
+aiprove.fun was made from this transcript.
